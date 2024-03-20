@@ -1,5 +1,6 @@
 package com.ceetech.orderservice.service.impl;
 
+import java.time.Instant;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
@@ -23,14 +24,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void placeOrder(OrderRequest orderRequest) {
-      Order order = new Order();
-      order.setOrderNumber(UUID.randomUUID().toString());
+        Order order = new Order();
+        order.setOrderNumber(UUID.randomUUID().toString());
+        order.setOrderTime(Instant.now());
 
-     var orderItems = orderRequest.getOrderItems().stream().map(this::mapToOrderItemEntity).toList();
+        var orderItems = orderRequest.getOrderItems().stream().map(this::mapToOrderItemEntity).toList();
 
-     order.setOrderItems(orderItems);
+        order.setOrderItems(orderItems);
 
-     orderRepository.save(order);
+        orderRepository.save(order);
     }
 
     private OrderItem mapToOrderItemEntity(OrderItemRequest itemRequest) {

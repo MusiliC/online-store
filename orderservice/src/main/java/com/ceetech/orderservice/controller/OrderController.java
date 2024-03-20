@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ceetech.orderservice.model.GenericResponseApi;
 import com.ceetech.orderservice.model.OrderRequest;
-import com.ceetech.orderservice.model.ProductCreateResponse;
 import com.ceetech.orderservice.service.OrderService;
 
 import java.util.List;
