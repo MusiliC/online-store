@@ -32,6 +32,10 @@ public class OrderServiceImpl implements OrderService {
 
         order.setOrderItems(orderItems);
 
+        //check all orders exist in inventory
+        //Throw an exception
+        
+
         orderRepository.save(order);
     }
 
