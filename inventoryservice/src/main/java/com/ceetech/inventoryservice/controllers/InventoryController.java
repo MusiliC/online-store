@@ -43,8 +43,7 @@ public class InventoryController {
     public GenericResponse<Boolean> checkInventory(
             @RequestParam(name = "productCode") List<String> productCode,
             @RequestParam(name = "productQuantity") List<Integer> productQuantity) {
-            log.info("{} ", productCode );
-            log.info("{} ", productQuantity);
+           
         return GenericResponse.<Boolean>builder()
                 .data(inventoryService.checkInventory(productCode, productQuantity))
                 .success(true).msg("Inventory exists").build();

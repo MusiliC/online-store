@@ -3,15 +3,22 @@ package com.ceetech.orderservice.service.impl;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.ceetech.orderservice.entity.Order;
 import com.ceetech.orderservice.entity.OrderItem;
+import com.ceetech.orderservice.exceptions.InventoryServiceException;
+import com.ceetech.orderservice.exceptions.NotEnoughQuantityException;
+import com.ceetech.orderservice.exceptions.OrderServiceException;
 import com.ceetech.orderservice.model.GenericResponse;
 import com.ceetech.orderservice.model.OrderItemRequest;
 import com.ceetech.orderservice.model.OrderRequest;
@@ -19,6 +26,7 @@ import com.ceetech.orderservice.repository.OrderRepository;
 import com.ceetech.orderservice.service.OrderService;
 
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Mono;
 
 @Service
 @Slf4j
@@ -32,6 +40,7 @@ public class OrderServiceImpl implements OrderService {
         this.webClient = webClient;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void placeOrder(OrderRequest orderRequest) {
         Order order = new Order();
@@ -48,14 +57,15 @@ public class OrderServiceImpl implements OrderService {
             productQuantity.add(orderItemRequest.getQuantity());
         }
 
-        GenericResponse<Boolean> response = webClient.get()
+        GenericResponse<?> response = webClient.get()
                 .uri("http://localhost:6003/api/inventory/check",
                         uriBuilder -> uriBuilder
                                 .queryParam("productCode", productCode)
                                 .queryParam("productQuantity", productQuantity)
                                 .build())
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<GenericResponse<Boolean>>() {
+                .onStatus(HttpStatusCode::isError, clientResponse -> handleError(clientResponse))
+                .bodyToMono(new ParameterizedTypeReference<GenericResponse<?>>() {
                 }).block();
 
         if (response.isSuccess()) {
@@ -71,7 +81,20 @@ public class OrderServiceImpl implements OrderService {
         } else {
             // ! Throw an exception when products are not enough
             log.error("Not enough stock", "Not enough stock");
+            log.info("{}", response.getData());
+
+            if (response.getData() instanceof Map) {
+                throw new NotEnoughQuantityException(response.getMsg(), (Map<String, Integer>) response.getData());
+            }
+
+            throw new OrderServiceException(response.getMsg());
+
         }
+    }
+
+    private Mono<? extends Throwable> handleError(ClientResponse response) {
+        log.error("Client error received: {}", response.statusCode());
+        return Mono.error(new InventoryServiceException("Error in inventory service"));
     }
 
     private OrderItem mapToOrderItemEntity(OrderItemRequest itemRequest) {
