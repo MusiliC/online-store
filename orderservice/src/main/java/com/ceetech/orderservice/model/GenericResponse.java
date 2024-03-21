@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class GenericResponseApi<T> {
+public class GenericResponse<T> {
     private String msg;
     private boolean success;
     @JsonInclude(value = Include.NON_NULL)

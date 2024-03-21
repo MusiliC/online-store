@@ -3,7 +3,7 @@ package com.ceetech.orderservice.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ceetech.orderservice.model.GenericResponseApi;
+import com.ceetech.orderservice.model.GenericResponse;
 import com.ceetech.orderservice.model.OrderRequest;
 import com.ceetech.orderservice.service.OrderService;
 
@@ -23,11 +23,11 @@ public class OrderController {
     }
 
     @PostMapping("placeorder")
-    public GenericResponseApi<?> placeOrder(@RequestBody OrderRequest orderRequest) {
+    public GenericResponse<?> placeOrder(@RequestBody OrderRequest orderRequest) {
 
         orderService.placeOrder(orderRequest);
 
-        GenericResponseApi<?> resp = GenericResponseApi.builder()
+        GenericResponse<?> resp = GenericResponse.builder()
                 .success(true)
                 .msg("Order placed successfully")
                 .build();

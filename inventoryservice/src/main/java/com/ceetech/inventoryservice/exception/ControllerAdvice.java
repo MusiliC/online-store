@@ -1,23 +1,25 @@
-package com.ceetech.productservice.exceptions;
+package com.ceetech.inventoryservice.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.ceetech.productservice.model.GenericResponseApi;
+import com.ceetech.inventoryservice.model.GenericResponse;
 
 @RestControllerAdvice
 public class ControllerAdvice {
 
-    @ExceptionHandler(ProductNotFoundException.class)
+    @ExceptionHandler(NotEnoughQuantityException.class)
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
-    public GenericResponseApi<?> handleProductNotFound(ProductNotFoundException ex) {
-        GenericResponseApi<?> resp = GenericResponseApi.builder()
+    public GenericResponse<?> handleProductNotFound(NotEnoughQuantityException ex) {
+        GenericResponse<?> resp = GenericResponse.builder()
                 .success(false)
                 .msg(ex.getMessage())
+                .data(ex.getUnavailableItems())
                 .build();
 
         return resp;
     }
+
 }
