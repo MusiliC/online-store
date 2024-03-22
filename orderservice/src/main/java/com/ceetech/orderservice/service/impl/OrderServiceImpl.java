@@ -42,7 +42,7 @@ public class OrderServiceImpl implements OrderService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void placeOrder(OrderRequest orderRequest) {
+    public String placeOrder(OrderRequest orderRequest) {
         Order order = new Order();
 
         // check all orders exist in inventory
@@ -78,6 +78,12 @@ public class OrderServiceImpl implements OrderService {
             order.setOrderItems(orderItems);
 
             orderRepository.save(order);
+
+            //TODO: make call to inventory to reduce quantity
+            //TODO:  endpoint to inventory receives two paras
+            //TODO: process payment service supply order number and amount of ites
+
+            return order.getOrderNumber();
         } else {
             // ! Throw an exception when products are not enough
             log.error("Not enough stock", "Not enough stock");
