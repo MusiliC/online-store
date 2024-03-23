@@ -9,3 +9,8 @@
 ### Features
  - Service Discovery: Eureka instances can be registered and clients can discover the instances using Spring-managed beans
  - Service Discovery: an embedded Eureka server can be created with declarative Java configuration
+
+```
+Registering server discovery
+Registering client
+```
