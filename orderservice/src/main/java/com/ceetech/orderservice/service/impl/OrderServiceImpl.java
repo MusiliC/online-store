@@ -8,7 +8,6 @@ import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.ClientResponse;
@@ -81,7 +80,7 @@ public class OrderServiceImpl implements OrderService {
 
             //TODO: make call to inventory to reduce quantity
             //TODO:  endpoint to inventory receives two paras
-            //TODO: process payment service supply order number and amount of ites
+            //TODO: process payment service supply order number and amount of items
 
             return order.getOrderNumber();
         } else {
