@@ -37,14 +37,13 @@ public class ProductController {
                 .msg("Data fetched Successfully")
                 .data(pr)
                 .build();
-        log.info("We returned : {}", pr);
+
         return resp;
     }
 
     @PostMapping
     public GenericResponse<ProductCreateResponse> createProduct(
             @RequestBody ProductCreateRequest productCreateRequest) {
-     
 
         ProductCreateResponse pr = productService.createProduct(productCreateRequest);
         GenericResponse<ProductCreateResponse> resp = GenericResponse.<ProductCreateResponse>builder()
@@ -53,7 +52,6 @@ public class ProductController {
                 .data(pr)
                 .build();
 
-        log.info("We returned : {}", pr);
         return resp;
     }
 

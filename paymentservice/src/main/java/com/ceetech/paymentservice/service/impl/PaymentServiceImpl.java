@@ -1,8 +1,11 @@
 package com.ceetech.paymentservice.service.impl;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import com.ceetech.paymentservice.dto.PaymentDto;
+import com.ceetech.paymentservice.dto.PaymentRequestDto;
+import com.ceetech.paymentservice.dto.PaymentResponseDto;
+import com.ceetech.paymentservice.entity.PaymentEntity;
 import com.ceetech.paymentservice.repository.PaymentRepository;
 import com.ceetech.paymentservice.service.PaymentService;
 
@@ -19,10 +22,22 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public String makePayment(PaymentDto paymentDto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'makePayment'");
+    public PaymentResponseDto makePayment(PaymentRequestDto paymentRequestDto) {
+        var paymentEntity = mapToPaymentEntity(paymentRequestDto);
+        var savedPayment = paymentRepository.save(paymentEntity);
+        return mapToResponseDto(savedPayment);
     }
 
-    
+    private PaymentResponseDto mapToResponseDto(PaymentEntity source) {
+        PaymentResponseDto target = new PaymentResponseDto();
+        BeanUtils.copyProperties(source, target);
+        return target;
+    }
+
+    private PaymentEntity mapToPaymentEntity(PaymentRequestDto source) {
+        PaymentEntity target = new PaymentEntity();
+        BeanUtils.copyProperties(source, target);
+        return target;
+    }
+
 }
