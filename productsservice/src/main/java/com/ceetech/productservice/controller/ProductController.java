@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ceetech.productservice.entity.Product;
-import com.ceetech.productservice.model.GenericResponseApi;
+import com.ceetech.productservice.model.GenericResponse;
 import com.ceetech.productservice.model.ProductCreateRequest;
 import com.ceetech.productservice.model.ProductCreateResponse;
 import com.ceetech.productservice.service.ProductService;
@@ -30,9 +30,9 @@ public class ProductController {
     }
 
     @GetMapping
-    public GenericResponseApi<List<ProductCreateResponse>> listProducts() {
+    public GenericResponse<List<ProductCreateResponse>> listProducts() {
         List<ProductCreateResponse> pr = productService.findAll();
-        GenericResponseApi<List<ProductCreateResponse>> resp = GenericResponseApi.<List<ProductCreateResponse>>builder()
+        GenericResponse<List<ProductCreateResponse>> resp = GenericResponse.<List<ProductCreateResponse>>builder()
                 .success(true)
                 .msg("Data fetched Successfully")
                 .data(pr)
@@ -42,12 +42,12 @@ public class ProductController {
     }
 
     @PostMapping
-    public GenericResponseApi<ProductCreateResponse> createProduct(
+    public GenericResponse<ProductCreateResponse> createProduct(
             @RequestBody ProductCreateRequest productCreateRequest) {
         log.info("We received : {}", productCreateRequest);
 
         ProductCreateResponse pr = productService.createProduct(productCreateRequest);
-        GenericResponseApi<ProductCreateResponse> resp = GenericResponseApi.<ProductCreateResponse>builder()
+        GenericResponse<ProductCreateResponse> resp = GenericResponse.<ProductCreateResponse>builder()
                 .success(true)
                 .msg("Successfully created")
                 .data(pr)
@@ -58,9 +58,9 @@ public class ProductController {
     }
 
     @GetMapping("{productId}")
-    public GenericResponseApi<ProductCreateResponse> findById(@PathVariable("productId") Integer productId) {
+    public GenericResponse<ProductCreateResponse> findById(@PathVariable("productId") Integer productId) {
         ProductCreateResponse pr = productService.findById(productId);
-        GenericResponseApi<ProductCreateResponse> resp = GenericResponseApi.<ProductCreateResponse>builder()
+        GenericResponse<ProductCreateResponse> resp = GenericResponse.<ProductCreateResponse>builder()
                 .success(true)
                 .msg("Data fetched Successfully")
                 .data(pr)
