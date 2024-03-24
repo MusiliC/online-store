@@ -98,6 +98,7 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+
     private Mono<? extends Throwable> handleError(ClientResponse response) {
         log.error("Client error received: {}", response.statusCode());
         return Mono.error(new InventoryServiceException("Error in inventory service"));
