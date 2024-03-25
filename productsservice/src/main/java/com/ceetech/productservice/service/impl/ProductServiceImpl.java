@@ -27,18 +27,7 @@ public class ProductServiceImpl implements ProductService {
         return mapToProductCreateResponse(savedProd);
     }
 
-    private Product mapToProductEntity(ProductCreateRequest source) {
-        Product target = new Product();
-        BeanUtils.copyProperties(source, target);
-        return target;
-    }
-
-    private ProductCreateResponse mapToProductCreateResponse(Product source) {
-        ProductCreateResponse target = new ProductCreateResponse();
-        BeanUtils.copyProperties(source, target);
-        return target;
-    }
-
+ 
     @Override
     public List<ProductCreateResponse> findAll() {
         return productRepository.findAll().stream().map(this::mapToProductCreateResponse).toList();
@@ -54,5 +43,18 @@ public class ProductServiceImpl implements ProductService {
     throw new ProductNotFoundException("Product with id not found");
 
     }
+
+    private Product mapToProductEntity(ProductCreateRequest source) {
+        Product target = new Product();
+        BeanUtils.copyProperties(source, target);
+        return target;
+    }
+
+    private ProductCreateResponse mapToProductCreateResponse(Product source) {
+        ProductCreateResponse target = new ProductCreateResponse();
+        BeanUtils.copyProperties(source, target);
+        return target;
+    }
+
 
 }

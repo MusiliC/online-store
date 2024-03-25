@@ -23,6 +23,16 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public PaymentResponseDto makePayment(PaymentRequestDto paymentRequestDto) {
+
+        // ? Get order service number - which has product code and quantity
+        //? Get product service - to get the price through the product code 
+        //?  Get products price
+        //?  Calculate total - create api to calculate total price - through quantity * product price
+
+        //! Else
+
+        //! Can't proceed with payment if no order number
+
         var paymentEntity = mapToPaymentEntity(paymentRequestDto);
         var savedPayment = paymentRepository.save(paymentEntity);
         return mapToResponseDto(savedPayment);

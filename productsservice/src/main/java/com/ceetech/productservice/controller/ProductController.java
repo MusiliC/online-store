@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ceetech.productservice.entity.Product;
+
 import com.ceetech.productservice.model.GenericResponse;
 import com.ceetech.productservice.model.ProductCreateRequest;
 import com.ceetech.productservice.model.ProductCreateResponse;
 import com.ceetech.productservice.service.ProductService;
 
-import jakarta.websocket.server.PathParam;
+
 import lombok.extern.slf4j.Slf4j;
 
 @RequestMapping("api/products")
@@ -63,7 +63,7 @@ public class ProductController {
                 .msg("Data fetched Successfully")
                 .data(pr)
                 .build();
-        log.info("We returned : {}", pr);
+      
         return resp;
     }
 
