@@ -12,5 +12,7 @@ public interface ProductService {
     List<ProductCreateResponse> findAll();
 
     ProductCreateResponse findById(Integer productId);
+
+    ProductCreateResponse findByProductCode(String productCode);
     
 }

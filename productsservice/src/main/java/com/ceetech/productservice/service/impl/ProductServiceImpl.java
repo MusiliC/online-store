@@ -21,27 +21,43 @@ public class ProductServiceImpl implements ProductService {
         this.productRepository = productRepository;
     }
 
+       // TODO CREATE PRODUCT
+       
     @Override
     public ProductCreateResponse createProduct(ProductCreateRequest productCreateRequest) {
         var savedProd = productRepository.save(mapToProductEntity(productCreateRequest));
         return mapToProductCreateResponse(savedProd);
     }
 
- 
+       // TODO GET ALL PRODUCTS
+
     @Override
     public List<ProductCreateResponse> findAll() {
         return productRepository.findAll().stream().map(this::mapToProductCreateResponse).toList();
     }
 
+       // TODO GET BY PRODUCT ID
+
     @Override
     public ProductCreateResponse findById(Integer productId) {
-       var pr = productRepository.findById(productId);
+        var productEntity = productRepository.findById(productId);
 
-       if (pr.isPresent()) {
-        return mapToProductCreateResponse(pr.get());
-       }
-    throw new ProductNotFoundException("Product with id not found");
+        if (productEntity.isPresent()) {
+            return mapToProductCreateResponse(productEntity.get());
+        }
+        throw new ProductNotFoundException("Product with id not found");
+    }
 
+    // TODO GET BY PRODUCT CODE
+
+    @Override
+    public ProductCreateResponse findByProductCode(String productCode) {
+        var productEntity = productRepository.findProductByProductCode(productCode);
+
+        if (productEntity != null) {
+            return mapToProductCreateResponse(productEntity);
+        }
+        throw new ProductNotFoundException("Product with id not found");
     }
 
     private Product mapToProductEntity(ProductCreateRequest source) {
@@ -55,6 +71,5 @@ public class ProductServiceImpl implements ProductService {
         BeanUtils.copyProperties(source, target);
         return target;
     }
-
 
 }

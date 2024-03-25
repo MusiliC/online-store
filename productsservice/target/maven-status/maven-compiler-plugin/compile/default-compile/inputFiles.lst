@@ -6,7 +6,7 @@
 /home/musili/Documents/Desktop/spring/online-store-tutorial/online-store/productsservice/src/main/java/com/ceetech/productservice/exceptions/ProductNotFoundException.java
 /home/musili/Documents/Desktop/spring/online-store-tutorial/online-store/productsservice/src/main/java/com/ceetech/productservice/exceptions/ControllerAdvice.java
 /home/musili/Documents/Desktop/spring/online-store-tutorial/online-store/productsservice/src/main/java/com/ceetech/productservice/entity/Product.java
+/home/musili/Documents/Desktop/spring/online-store-tutorial/online-store/productsservice/src/main/java/com/ceetech/productservice/model/GenericResponse.java
 /home/musili/Documents/Desktop/spring/online-store-tutorial/online-store/productsservice/src/main/java/com/ceetech/productservice/service/ProductService.java
 /home/musili/Documents/Desktop/spring/online-store-tutorial/online-store/productsservice/src/main/java/com/ceetech/productservice/controller/ProductController.java
 /home/musili/Documents/Desktop/spring/online-store-tutorial/online-store/productsservice/src/main/java/com/ceetech/productservice/model/ProductCreateRequest.java
-/home/musili/Documents/Desktop/spring/online-store-tutorial/online-store/productsservice/src/main/java/com/ceetech/productservice/model/GenericResponseApi.java

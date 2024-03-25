@@ -60,8 +60,21 @@ public class ProductController {
         ProductCreateResponse pr = productService.findById(productId);
         GenericResponse<ProductCreateResponse> resp = GenericResponse.<ProductCreateResponse>builder()
                 .success(true)
-                .msg("Data fetched Successfully")
+                .msg("Product fetched Successfully")
                 .data(pr)
+                .build();
+      
+        return resp;
+    }
+
+    @GetMapping("code/{productCode}")
+    public GenericResponse<ProductCreateResponse> findByProductCode(@PathVariable("productCode") String productCode) {
+       
+        ProductCreateResponse productResponse = productService.findByProductCode(productCode);
+        GenericResponse<ProductCreateResponse> resp = GenericResponse.<ProductCreateResponse>builder()
+                .success(true)
+                .msg("Product fetched Successfully")
+                .data(productResponse)
                 .build();
       
         return resp;
