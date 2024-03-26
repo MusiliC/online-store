@@ -14,5 +14,14 @@
 Registering server discovery
 Registering client
 ```
+## Zipkin
+Distributed tracing - allows us to track a request form from its initiation to completion
 
+You can use this command
 
+```
+docker run -d -p 9411:9411 openzipkin/zipkin
+
+```
+
+Or run the docker-compose.yaml file fro zipkin official webpage > quickstart

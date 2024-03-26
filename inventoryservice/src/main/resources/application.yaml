@@ -4,11 +4,19 @@ spring:
   application:
     name: inventory-service
   profiles: 
-    active: development, default
+    active: qa,default
   config:
     import: optional:configserver:http://localhost:8888
-  # data: 
-  #   mongodb:
-  #       uri: mongodb://localhost:27017/inventorydb
-       
+
+management:
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoints:
+    web:
+      exposure:
+        include: "*"       
 
