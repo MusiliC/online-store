@@ -3,10 +3,12 @@ server:
 spring:
   application:
     name: inventory-service
+  profiles: 
+    active: development, default
   config:
     import: optional:configserver:http://localhost:8888
-  data: 
-    mongodb:
-        uri: mongodb://localhost:27017/inventorydb
+  # data: 
+  #   mongodb:
+  #       uri: mongodb://localhost:27017/inventorydb
        
 

@@ -1,17 +1,19 @@
 server:
   port: 6000
 spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/productdb
-    username: root
-    password: makutano
+  # datasource:
+  #   url: jdbc:mysql://localhost:3306/productdb
+  #   username: root
+  #   password: makutano
+  profiles:
+    active: development, default
   application:
     name: product-service
   config:
     import: optional:configserver:http://localhost:8888
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
+  # jpa:
+  #   show-sql: true
+  #   hibernate:
+  #     ddl-auto: update
 
 
