@@ -7,7 +7,6 @@ import java.util.Map;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-
 import com.ceetech.inventoryservice.entity.Inventory;
 import com.ceetech.inventoryservice.exception.NotEnoughQuantityException;
 import com.ceetech.inventoryservice.model.InventoryCreateDto;
@@ -19,10 +18,9 @@ import com.ceetech.inventoryservice.service.InventoryService;
 public class InventoryServiceImpl implements InventoryService {
     private final InventoryRepository inventoryRepository;
 
-
     public InventoryServiceImpl(InventoryRepository inventoryRepository) {
         this.inventoryRepository = inventoryRepository;
- 
+
     }
 
     @Override
@@ -60,6 +58,10 @@ public class InventoryServiceImpl implements InventoryService {
 
                 if (eachProductQuantity > dbInventory) {
                     unAvailableItems.put(eachProductCode, eachProductQuantity - dbInventory);
+                } else {
+                    //? Reduce inventory quantity
+                    inventory.setQuantity(dbInventory - eachProductQuantity);
+                    inventoryRepository.save(inventory); // Save the updated inventor
                 }
 
             } else {
@@ -67,7 +69,8 @@ public class InventoryServiceImpl implements InventoryService {
             }
         }
 
-        if(unAvailableItems.isEmpty())  return true;
-        throw new NotEnoughQuantityException("Not enough quantity in stock",unAvailableItems);
+        if (unAvailableItems.isEmpty())
+            return true;
+        throw new NotEnoughQuantityException("Not enough quantity in stock", unAvailableItems);
     }
 }
