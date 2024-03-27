@@ -2,6 +2,7 @@ package com.ceetech.paymentservice.service.impl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.ceetech.paymentservice.dto.PaymentRequestDto;
 import com.ceetech.paymentservice.dto.PaymentResponseDto;
@@ -16,9 +17,11 @@ import lombok.extern.slf4j.Slf4j;
 public class PaymentServiceImpl implements PaymentService {
 
     private final PaymentRepository paymentRepository;
+    private final WebClient.Builder webClientBuilder;
 
-    public PaymentServiceImpl(PaymentRepository paymentRepository) {
+    public PaymentServiceImpl(PaymentRepository paymentRepository, WebClient.Builder webClientBuilder) {
         this.paymentRepository = paymentRepository;
+        this.webClientBuilder = webClientBuilder;
     }
 
     @Override

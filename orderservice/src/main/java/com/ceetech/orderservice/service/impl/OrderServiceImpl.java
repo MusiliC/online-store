@@ -23,6 +23,7 @@ import com.ceetech.orderservice.model.GenericResponse;
 import com.ceetech.orderservice.model.OrderItemRequest;
 import com.ceetech.orderservice.model.OrderItemResponse;
 import com.ceetech.orderservice.model.OrderRequest;
+import com.ceetech.orderservice.model.OrderResponseDto;
 import com.ceetech.orderservice.repository.OrderItemRepository;
 import com.ceetech.orderservice.repository.OrderRepository;
 import com.ceetech.orderservice.service.OrderService;
@@ -47,7 +48,7 @@ public class OrderServiceImpl implements OrderService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public String placeOrder(OrderRequest orderRequest) {
+    public OrderResponseDto placeOrder(OrderRequest orderRequest) {
         Order order = new Order();
 
         // check all orders exist in inventory
@@ -82,13 +83,13 @@ public class OrderServiceImpl implements OrderService {
 
             order.setOrderItems(orderItems);
 
-            orderRepository.save(order);
+           var savedOrder =  orderRepository.save(order);
 
             // TODO: make call to inventory to reduce quantity
             // TODO: endpoint to inventory receives two paras
             // TODO: process payment service supply order number and amount of items
 
-            return order.getOrderNumber();
+            return mapToOrderResponseDto(savedOrder);
         } else {
             // ! Throw an exception when products are not enough
             log.error("Not enough stock", "Not enough stock");
@@ -131,4 +132,11 @@ public class OrderServiceImpl implements OrderService {
         BeanUtils.copyProperties(orderItem, target);
         return target;
     }
+
+    private OrderResponseDto mapToOrderResponseDto(Order order) {
+        OrderResponseDto target = new OrderResponseDto();
+        BeanUtils.copyProperties(order, target);
+        return target;
+    }
+
 }

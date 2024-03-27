@@ -7,6 +7,7 @@ import com.ceetech.orderservice.model.GenericResponse;
 import com.ceetech.orderservice.model.OrderItemRequest;
 import com.ceetech.orderservice.model.OrderItemResponse;
 import com.ceetech.orderservice.model.OrderRequest;
+import com.ceetech.orderservice.model.OrderResponseDto;
 import com.ceetech.orderservice.service.OrderService;
 
 import java.util.List;
@@ -27,12 +28,14 @@ public class OrderController {
     }
 
     @PostMapping("placeorder")
-    public GenericResponse<String> placeOrder(@RequestBody OrderRequest orderRequest) {
+    public GenericResponse<OrderResponseDto> placeOrder(@RequestBody OrderRequest orderRequest) {
 
-        GenericResponse<String> resp = GenericResponse.<String>builder()
+        OrderResponseDto orderResponseDto = orderService.placeOrder(orderRequest);
+
+        GenericResponse<OrderResponseDto> resp = GenericResponse.<OrderResponseDto>builder()
                 .success(true)
                 .msg("Order placed successfully")
-                .data(orderService.placeOrder(orderRequest))
+                .data(orderResponseDto)
                 .build();
 
         return resp;
