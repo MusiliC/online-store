@@ -1,6 +1,7 @@
 package com.ceetech.orderservice.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ceetech.orderservice.model.GenericResponse;
@@ -42,9 +43,8 @@ public class OrderController {
 
     }
 
-    @GetMapping("{orderId}")
-    public GenericResponse<OrderItemResponse> getOrderById(@PathVariable("orderId") Integer orderId) {
-
+    @GetMapping
+    public GenericResponse<OrderItemResponse> getOrderById(@RequestParam("orderId") Integer orderId) {
         OrderItemResponse orderItemResponse = orderService.findById(orderId);
 
         GenericResponse<OrderItemResponse> response = GenericResponse.<OrderItemResponse>builder()
@@ -54,7 +54,6 @@ public class OrderController {
                 .build();
 
         return response;
-
     }
 
 }
