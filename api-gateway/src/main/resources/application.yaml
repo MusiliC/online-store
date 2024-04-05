@@ -11,20 +11,20 @@ spring:
         - id: products
           uri: lb://PRODUCT-SERVICE
           predicates:
-            - Path=/api/products/**
+            - Path=/api/v1/products/**
         
         - id: order
           uri: lb://ORDER-SERVICE
           predicates:
-            - Path=/api/order/**
+            - Path=/api/v1/order/**
 
         - id: inventory
           uri: lb://INVENTORY-SERVICE
           predicates:
-            - Path=/api/inventory/**
+            - Path=/api/v1/inventory/**
         
         - id: payment
           uri: lb://PAYMENT-SERVICE
           predicates:
-            - Path=/api/payments/**
+            - Path=/api/v1/payments/**
 
