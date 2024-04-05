@@ -3,6 +3,7 @@ package com.ceetech.productservice.service.impl;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.ceetech.productservice.entity.Category;
@@ -34,8 +35,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryResponseDto createCategory(CategoryRequestDto categoryRequestDto) {
-        var savedCategory = categoryRepository.save(mapToCategoryEntity(categoryRequestDto));
-        return mapToCategoryResponseDto(savedCategory);
+
+        try {
+            var savedCategory = categoryRepository.save(mapToCategoryEntity(categoryRequestDto));
+            return mapToCategoryResponseDto(savedCategory);
+        } catch (org.springframework.dao.DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationException("Duplicate Category Name");
+        }
     }
 
     @Override
@@ -52,7 +58,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryResponseDto> findAll() {
         return categoryRepository.findAll().stream().map(this::mapToCategoryResponseDto).toList();
-  }
+    }
 
     private CategoryResponseDto mapToCategoryResponseDto(Category savedCategory) {
         CategoryResponseDto target = new CategoryResponseDto();

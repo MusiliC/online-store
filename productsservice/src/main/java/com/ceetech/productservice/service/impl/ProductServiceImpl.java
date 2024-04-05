@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.ceetech.productservice.entity.Category;
@@ -29,8 +30,26 @@ public class ProductServiceImpl implements ProductService {
     // TODO CREATE PRODUCT
     @Override
     public ProductCreateResponse createProduct(ProductCreateRequest productCreateRequest) {
-        var savedProd = productRepository.save(mapToProductEntity(productCreateRequest));
-        return mapToProductCreateResponse(savedProd);
+        try {
+
+            Product newProduct = mapToProductEntity(productCreateRequest);
+            // var savedProduct =
+            // productRepository.save(mapToProductEntity(productCreateRequest));
+            // return mapToProductCreateResponse(savedProduct);
+
+            Category category = categoryRepository.findByName(productCreateRequest.getCategoryName())
+                    .orElseGet(() -> {
+                        Category newCategory = new Category();
+                        newCategory.setName(productCreateRequest.getCategoryName());
+                        return categoryRepository.save(newCategory);
+                    });
+            newProduct.setCategory(category);
+
+            return mapToProductCreateResponse(productRepository.save(newProduct));
+        } catch (org.springframework.dao.DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationException(
+                    "Duplicate product code");
+        }
     }
 
     // TODO CREATE MULTIPLE PRODUCTS
