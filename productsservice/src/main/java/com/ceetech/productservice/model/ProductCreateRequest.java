@@ -16,4 +16,5 @@ public class ProductCreateRequest {
   private BigDecimal price;
   private String productCode;
   private String categoryName;
+  private String image;
 }

@@ -1,5 +1,9 @@
-com/ceetech/productservice/service/ProductService.class
 com/ceetech/productservice/model/GenericResponse.class
+com/ceetech/productservice/model/ProductCreateRequest$ProductCreateRequestBuilder.class
+com/ceetech/productservice/repository/ProductRepository.class
+com/ceetech/productservice/ProductServiceApplication.class
+com/ceetech/productservice/entity/Product.class
+com/ceetech/productservice/service/ProductService.class
 com/ceetech/productservice/model/ProductCreateRequest.class
 com/ceetech/productservice/model/ProductCreateResponse.class
 com/ceetech/productservice/exceptions/ControllerAdvice.class
@@ -9,8 +13,4 @@ com/ceetech/productservice/controller/HelloWorldController.class
 com/ceetech/productservice/model/ProductCreateResponse$ProductCreateResponseBuilder.class
 com/ceetech/productservice/service/impl/ProductServiceImpl.class
 com/ceetech/productservice/entity/Product$ProductBuilder.class
-com/ceetech/productservice/model/ProductCreateRequest$ProductCreateRequestBuilder.class
-com/ceetech/productservice/repository/ProductRepository.class
 com/ceetech/productservice/controller/ProductController.class
-com/ceetech/productservice/ProductServiceApplication.class
-com/ceetech/productservice/entity/Product.class
