@@ -1,5 +1,7 @@
 package com.ceetech.productservice.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +48,11 @@ public class CategoryServiceImpl implements CategoryService {
 
         throw new CategoryNotFoundException("Category with id not found");
     }
+
+    @Override
+    public List<CategoryResponseDto> findAll() {
+        return categoryRepository.findAll().stream().map(this::mapToCategoryResponseDto).toList();
+  }
 
     private CategoryResponseDto mapToCategoryResponseDto(Category savedCategory) {
         CategoryResponseDto target = new CategoryResponseDto();
