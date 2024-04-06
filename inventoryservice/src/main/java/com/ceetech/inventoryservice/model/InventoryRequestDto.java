@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InventoryCreateDto {
+public class InventoryRequestDto {
 
     private String productCode;
 

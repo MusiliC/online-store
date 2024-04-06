@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class GenericResponse<T> {
+    private int itemCount;
     private String msg;
     private boolean success;
     @JsonInclude(value = Include.NON_NULL)

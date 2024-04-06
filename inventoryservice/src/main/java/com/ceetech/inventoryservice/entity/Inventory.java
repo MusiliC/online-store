@@ -3,6 +3,7 @@ package com.ceetech.inventoryservice.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,5 +18,6 @@ public class Inventory {
 
     private String productCode;
 
+    @Min(value = 0, message = "Quantity cannot be less than zero")
     private Integer quantity;
 }
