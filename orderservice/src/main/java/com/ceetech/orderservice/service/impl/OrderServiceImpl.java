@@ -1,6 +1,8 @@
 package com.ceetech.orderservice.service.impl;
 
+import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +18,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import com.ceetech.orderservice.entity.Order;
 import com.ceetech.orderservice.entity.OrderItem;
 import com.ceetech.orderservice.exceptions.InventoryServiceException;
+import com.ceetech.orderservice.exceptions.MissingDateRangeException;
 import com.ceetech.orderservice.exceptions.NotEnoughQuantityException;
 import com.ceetech.orderservice.exceptions.OrderNotFoundException;
 import com.ceetech.orderservice.exceptions.OrderServiceException;
@@ -137,6 +140,33 @@ public class OrderServiceImpl implements OrderService {
         OrderResponseDto target = new OrderResponseDto();
         BeanUtils.copyProperties(order, target);
         return target;
+    }
+
+
+    @Override
+    public List<OrderResponseDto> getAllOrders() {
+        return orderRepository.findAll().stream().map(this::mapToOrderResponseDto).toList();
+    }
+
+    @Override
+    public List<OrderResponseDto> getOrdersByDateRange(LocalDate startDate, LocalDate endDate) {
+        if (startDate == null && endDate == null) {
+            throw new MissingDateRangeException("At least one of startDate or endDate must be provided");
+        }
+
+        // if (startDate != null && endDate != null) {
+        //     return orderRepository.findByOrderTimeBetween(startDate.atStartOfDay(), endDate.plusDays(1).atStartOfDay())
+        //             .stream()
+        //             .map(this::mapToOrderResponse)
+        //             .toList();
+
+        return null;
+    }
+
+    @Override
+    public Boolean validateOrder(String orderId, BigDecimal orderAmount) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'validateOrder'");
     }
 
 }

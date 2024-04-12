@@ -11,6 +11,10 @@ import com.ceetech.orderservice.model.OrderRequest;
 import com.ceetech.orderservice.model.OrderResponseDto;
 import com.ceetech.orderservice.service.OrderService;
 
+import lombok.extern.slf4j.Slf4j;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RequestMapping("api/order")
 @RestController
+@Slf4j
 public class OrderController {
 
     private final OrderService orderService;
@@ -53,6 +58,39 @@ public class OrderController {
                 .data(orderItemResponse)
                 .build();
 
+        return response;
+    }
+
+    @GetMapping("/filter")
+    public GenericResponse<List<OrderResponseDto>> filterOrders(
+            @RequestParam(required = false) LocalDate startDate,
+            @RequestParam(required = false) LocalDate endDate) {
+
+        List<OrderResponseDto> ordersResponse = orderService.getOrdersByDateRange(startDate, endDate);
+        log.info(":::::::::::Start Date::::::::::: " + startDate);
+        log.info(":::::::::::End Date::::::::::: " + endDate);
+        GenericResponse<List<OrderResponseDto>> response = GenericResponse.<List<OrderResponseDto>>builder()
+                .msg("All Orders")
+                .success(true)
+                .itemCount(ordersResponse.size())
+                .data(ordersResponse)
+                .build();
+        return response;
+    }
+
+    @GetMapping("/")
+    public GenericResponse<List<OrderResponseDto>> getAllOrders() {
+
+        List<OrderResponseDto> ordersResponse = new ArrayList<>();
+
+        ordersResponse = orderService.getAllOrders();
+
+        GenericResponse<List<OrderResponseDto>> response = GenericResponse.<List<OrderResponseDto>>builder()
+                .msg("All Orders")
+                .success(true)
+                .itemCount(ordersResponse.size())
+                .data(ordersResponse)
+                .build();
         return response;
     }
 

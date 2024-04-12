@@ -1,11 +1,14 @@
 package com.ceetech.orderservice.entity;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -37,5 +40,14 @@ public class Order {
 
     @OneToMany(cascade = CascadeType.ALL)
     List<OrderItem> orderItems;
+
+    @Column(name = "order_total")
+    private BigDecimal orderTotal;
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
+
+    @Column(name = "customer_id")
+    private String userId;
     
 }

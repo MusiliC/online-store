@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class GenericResponse<T> {
     private String msg;
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
+    private int itemCount;
     private boolean success;
     @JsonInclude(value = Include.NON_NULL)
     private T data;
